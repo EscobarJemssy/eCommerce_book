@@ -1,29 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // ✅ IMPORTACIÓN NECESARIA
-import Inicio from './views/Inicio';
-import Carrito from './views/Carrito';
-import Libros from './views/Libros';
+import React, { useEffect, useState, useRef } from "react";
+import jsonData from "../assets/google_books_1299_copy.json"
 
-function App() {
-  return (
-    <Router>
-      <header>
-        <nav>
-          <img src='' alt=''></img>
-          <Link to="/">Inicio</Link>
-          <Link to="/Carrito">Carrito</Link>
-          <Link to="/Libros">Libros</Link>
-        </nav>
-      </header>
+const Libros = () => {
 
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route path="/Carrito" element={<Carrito />} />
-        <Route path="/Libros" element={<Libros />} />
-      </Routes>
-    </Router>
-  );
-}
+    const [Visibilidad, setVisibilidad] = useState([]);
+    const [Pagina, setPagina] = useState(0);
+    const Carga = useRef(null);
+    const Limite = 15;
 
-export default App;
+    useEffect(() => {
+        const CargaPagina = () => {
+            const Inicio = Pagina * Limite;
+            const Bucle = [];
+
+            for (let i = 0; 1 < Limite; i++) {
+                const Index = (Inicio + 1) % jsonData.length;
+                Bucle.push(jsonData[Index]);
+            }
+
+            setVisibilidad(prev => [...prev, ...Bucle]);
+
+        };
+
+        CargaPagina();
+
+    }, [Pagina]);
+
+    useEffect (() =>{
+        const observer = new IntersectionObserver(entradas => {
+            if(entradas[0].isIntersecting){
+                setPagina(prev => prev+1)
+            }
+        });
+
+        if (Carga.current) observer.observe(Carga.current);
+
+        return () => {
+            if (Carga.current) observer.observe(Carga.current);
+        };
+    }, []); 
+
+    return (
+        <>
+            <h1>Soy los libros</h1>
+        </>
+    )
+
+};
+
+export default Libros;
