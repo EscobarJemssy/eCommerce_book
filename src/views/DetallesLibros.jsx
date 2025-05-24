@@ -30,18 +30,11 @@ const BookDetails = () => { // This component is used to display the details of 
 
     return (
         <>
-            <div>
-                <h1>{book.title}</h1>
-                <p>Autor: {book.author}</p>
-                <p>Precio: {book.price}</p>
-                <p>Fecha de publicación: {book.published_date}</p>
-
-                <button type="button" onClick={handleAgregarAlCarrito}>
-                    Agregar al Carrito
-                </button>
-                <button type="button" onClick={() => {navigate(-1);}}>Regresar</button>
-            </div>
-
+            <h1>{book.title}</h1>
+            <p>Autor: {book.author}</p>
+            <p>Precio: {book.price}</p>
+            <p>Fecha de publicación: {book.published_date}</p>
+            {/* other data and missing add to cart button! */}
             <Footer />
         </>
     );

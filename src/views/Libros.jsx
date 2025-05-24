@@ -99,6 +99,7 @@ const Libros = () => {
 
             {/* lista de libros filtrados */}
             <ul>
+<<<<<<< HEAD
                 {Visibilidad
                     .filter(libro =>
                         (autorSeleccionado === "Todos" || libro.author === autorSeleccionado) &&
@@ -118,6 +119,29 @@ const Libros = () => {
                                 <strong>Precio:</strong> {libro.price}<br />
                                 <strong>Fecha:</strong> {libro.published_date}
                             </div>
+=======
+                {Visibilidad.map((libro, index) => (
+                    <li key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '15px' }}>
+                        <img
+                            src="https://cdn.shopify.com/s/files/1/2482/2494/files/Cuentos_de_los_hermanos_Grimm_480x480.jpg?v=1629400827"
+                            alt={libro.title}
+                            style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
+                        />
+                        <div>
+                            <strong>Nombre:</strong> {libro.title}<br />
+                            <strong>Autor:</strong> {libro.author}<br />
+                            <strong>Precio:</strong> {libro.price}<br />
+                            <strong>Fecha de publicación:</strong> {libro.published_date}<br />
+                            <strong>Descripción:</strong> {libro.description}<br />
+                            <strong>Editorial:</strong> {libro.publisher}<br />
+                            <strong>ISBN:</strong> {libro.ISBN}<br />
+                            <strong>Idioma:</strong> {libro.language}<br />
+                            <strong>Páginas:</strong> {libro.page_count}<br />
+                        </div>
+
+                        <button type="button" onClick={() => Redireccion(libro.index)}>Ver Mas!</button>
+                        <button type="button">Llevar al Carrito</button>
+>>>>>>> 1f5b6f2cdde3f2a3fb148d87cec0976a3e697079
 
                             <button type="button" onClick={() => {navegacion(`/DetalleLibro/${index}`);}}>Ver Mas!</button>
 

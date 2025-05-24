@@ -3,7 +3,7 @@ import ContCarrusel from "./subComponents/ContCarrusel";
 import jsonData from "../assets/google_books_1299_clean_1.json"; // revisar la ruta
 
 const Carrusel = () => {
-    const media_rating = 4.274 
+    const media_rating = 4.25 //4.24888888888889
     const median_voters = [1382, 38526] //135.0
     const best_sold = jsonData.filter(book => book.rating && book.rating >= media_rating).slice(0, 5);
     const rec_book = jsonData.filter(rec => rec.voters && rec.voters >= median_voters[0] && rec.voters <= median_voters[1]).sort((a, b) => b.voters - a.voters)
