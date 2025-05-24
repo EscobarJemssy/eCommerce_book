@@ -7,7 +7,7 @@ const Carrusel = () => {
     const median_voters = [1382, 38526] //135.0
     const best_sold = jsonData.filter(book => book.rating && book.rating >= media_rating).slice(0, 5);
     const rec_book = jsonData.filter(rec => rec.voters && rec.voters >= median_voters[0] && rec.voters <= median_voters[1]).sort((a, b) => b.voters - a.voters)
-    const random_book = [...jsonData].sort(() => Math.random() - 0.5).slice(0, 5);
+    const random_book = [...jsonData].sort(() => Math.random() - 0.5).slice(0, 5); // Randomly shuffle the array and take the first 5 elements
     return (
         <>
 
