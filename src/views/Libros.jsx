@@ -1,17 +1,30 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import jsonData from "../assets/google_books_1299_copy.json"
+import jsonData from "../assets/google_books_1299_clean_1.json"
 
 const Libros = () => {
 
+    // importacion para la navegacion de paginas
     const navegacion = useNavigate();
 
+    // variables para la muestra de items y scroll infinito
     const [Visibilidad, setVisibilidad] = useState([]);
     const [pagina, setPagina] = useState(0);
     const loaderRef = useRef(null);
     const LIMITE = 15;
 
+    // variables para filtrar
+    // autores
+    const [autorSeleccionado, setAutorSeleccionado] = useState("Todos");
+    const autoresUnicos = ["Todos", ...new Set(jsonData.map(libro => libro.author))];
+    // generos
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
+    const categoriasUnicas = [
+        "Todas", ...Array.from(new Set(jsonData.flatMap(libro => libro.generes && libro.generes !== "Undefined" ? libro.generes.split(",").map(g => g.trim()) : [])))
+    ];
+
+    // Cargar la primera página de datos al inicio
     useEffect(() => {
         const cargarPagina = () => {
             const inicio = pagina * LIMITE;
@@ -35,6 +48,7 @@ const Libros = () => {
 
     }, [pagina]);
 
+    // observer para el scroll infinito
     useEffect(() => {
         const observer = new IntersectionObserver(entradas => {
             if (entradas[0].isIntersecting) {
@@ -49,32 +63,66 @@ const Libros = () => {
         };
     }, []);
 
-    function Redireccion(index) {
-        navegacion(`/DetalleLibro/${index}`); 
+    // funcion para limpiar los filtros
+    function limpiarFiltros() {
+        setAutorSeleccionado("Todos");
+        setCategoriaSeleccionada("Todas");
     }
 
 
     return (
         <div style={{ height: '80vh', overflowY: 'auto' }}>
+
+            {/* filtros para autor y categoría */}
+            <div style={{ padding: '10px', display: 'flex', gap: '20px' }}>
+                <div>
+                    <label><strong>Filtrar por autor:</strong></label>
+                    <select value={autorSeleccionado} onChange={(e) => setAutorSeleccionado(e.target.value)}>
+                        {autoresUnicos.map((autor, i) => (
+                            <option key={i} value={autor}>{autor}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div>
+                    <label><strong>Filtrar por categoría:</strong></label>
+                    <select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
+                        {categoriasUnicas.map((cat, i) => (
+                            <option key={i} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <button onClick={limpiarFiltros}>Limpiar filtros</button>
+            </div>
+
+
+            {/* lista de libros filtrados */}
             <ul>
-                {Visibilidad.map((libro, index) => (
-                    <li key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '15px' }}>
-                        <img
-                            src="https://cdn.shopify.com/s/files/1/2482/2494/files/Cuentos_de_los_hermanos_Grimm_480x480.jpg?v=1629400827"
-                            alt={libro.title}
-                            style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
-                        />
-                        <div>
-                            <strong>Nombre:</strong> {libro.title}<br />
-                            <strong>Tipo:</strong> {libro.author}<br />
-                            <strong>Tamaño:</strong> {libro.price}<br />
-                            <strong>Fecha:</strong> {libro.published_date}
-                        </div>
+                {Visibilidad
+                    .filter(libro =>
+                        (autorSeleccionado === "Todos" || libro.author === autorSeleccionado) &&
+                        (categoriaSeleccionada === "Todas" || (libro.generes && libro.generes.includes(categoriaSeleccionada)))
+                    )
+                    .map((libro, index) => (
 
-                        <button type="button" onClick={() => Redireccion(libro.index)}>Ver Mas!</button>
+                        <li key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '15px' }}>
+                            <img
+                                src="https://cdn.shopify.com/s/files/1/2482/2494/files/Cuentos_de_los_hermanos_Grimm_480x480.jpg?v=1629400827"
+                                alt={libro.title}
+                                style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
+                            />
+                            <div>
+                                <strong>Nombre:</strong> {libro.title}<br />
+                                <strong>Tipo:</strong> {libro.author}<br />
+                                <strong>Precio:</strong> {libro.price}<br />
+                                <strong>Fecha:</strong> {libro.published_date}
+                            </div>
 
-                    </li>
-                ))}
+                            <button type="button" onClick={() => {navegacion(`/DetalleLibro/${index}`);}}>Ver Mas!</button>
+
+                        </li>
+                    ))}
             </ul>
             <div ref={loaderRef} style={{ padding: '20px', textAlign: 'center' }}>
                 Cargando más archivos...
