@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Inicio from './views/Inicio';
 import Carrito from './views/Carrito';
 import Libros from './views/Libros';
+import DetallesLibros from './views/DetallesLibros';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/Carrito" element={<Carrito />} />
         <Route path="/Libros" element={<Libros />} />
+        <Route path="/DetalleLibro/:index" element={<DetallesLibros />} />
       </Routes>
     </Router>
   );
