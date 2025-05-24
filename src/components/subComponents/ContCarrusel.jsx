@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const ContCarrusel = ({category}) => {
     return (
-        <div className="carrusel-horizontal">
+        <div className="carrusel-horizontal"> 
             {category.map((cat) => (
                 <div key={cat.index} className="cat">
                     <img src=""/>
