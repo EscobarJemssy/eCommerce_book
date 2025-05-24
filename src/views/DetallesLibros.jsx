@@ -22,7 +22,12 @@ const BookDetails = () => { // This component is used to display the details of 
             <p>Autor: {book.author}</p>
             <p>Precio: {book.price}</p>
             <p>Fecha de publicación: {book.published_date}</p>
-            {/* other data and missing add to cart button! */}
+            <p>Descripción: {book.description}</p>
+            <p>Lugar de publicación: {book.publisher}</p>
+            <p>ISBN: {book.ISBN}</p>
+            <p>Idioma: {book.language}</p>
+            <p>Paginas: {book.page_count}</p>
+            <p>Fecha de publicación: {book.published_date}</p>
             <Footer />
         </>
     );

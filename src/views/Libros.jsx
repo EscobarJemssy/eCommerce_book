@@ -66,12 +66,18 @@ const Libros = () => {
                         />
                         <div>
                             <strong>Nombre:</strong> {libro.title}<br />
-                            <strong>Tipo:</strong> {libro.author}<br />
-                            <strong>Tamaño:</strong> {libro.price}<br />
-                            <strong>Fecha:</strong> {libro.published_date}
+                            <strong>Autor:</strong> {libro.author}<br />
+                            <strong>Precio:</strong> {libro.price}<br />
+                            <strong>Fecha de publicación:</strong> {libro.published_date}<br />
+                            <strong>Descripción:</strong> {libro.description}<br />
+                            <strong>Editorial:</strong> {libro.publisher}<br />
+                            <strong>ISBN:</strong> {libro.ISBN}<br />
+                            <strong>Idioma:</strong> {libro.language}<br />
+                            <strong>Páginas:</strong> {libro.page_count}<br />
                         </div>
 
                         <button type="button" onClick={() => Redireccion(libro.index)}>Ver Mas!</button>
+                        <button type="button">Llevar al Carrito</button>
 
                     </li>
                 ))}
