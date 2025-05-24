@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import jsonData from "../assets/google_books_1299_clean_1.json";
 
-const BookDetails = () => {
+const BookDetails = () => { // This component is used to display the details of a book
     const { index } = useParams();
     const [book, setBook] = useState(null);
 
@@ -22,7 +22,6 @@ const BookDetails = () => {
             <p>Autor: {book.author}</p>
             <p>Precio: {book.price}</p>
             <p>Fecha de publicación: {book.published_date}</p>
-            
             {/* other data and missing add to cart button! */}
             <Footer />
         </>
