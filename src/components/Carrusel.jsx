@@ -18,11 +18,11 @@ const Carrusel = () => {
             </div>
 
             <div class="carrusel">
-                <h2 class="titulo">Libros más vendidos</h2>
+                <h2 style={{ fontFamily: 'Bahnschrift Light', fontSize: 22 , textAlign: 'center'}}>Libros más vendidos</h2>
                 <ContCarrusel category={best_sold} />
-                <h2 class="titulo">Libros recomendados</h2>
+                <h2 style={{ fontFamily: 'Bahnschrift Light', fontSize: 22, textAlign: 'center' }}>Libros recomendados</h2>
                 <ContCarrusel category={rec_book} />
-                <h2 class="titulo">Libros de temporada</h2>
+                <h2 style={{ fontFamily: 'Bahnschrift Light', fontSize: 22, textAlign: 'center' }}>Libros de temporada</h2>
                 <ContCarrusel category={random_book} />
             </div>
 

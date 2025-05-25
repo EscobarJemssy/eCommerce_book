@@ -15,7 +15,7 @@ function App() {
         <header>
           <nav> 
             <img src={img} alt='Logo' />
-            <p>Guardian de libros</p>
+            <p style={{ fontFamily: 'Bahnschrift Light', fontSize: 22 }}>Guardián de libros</p>
             <Link to="/">Inicio</Link>
             <Link to="/Carrito">Carrito</Link> 
             <Link to="/Libros">Libros</Link>
