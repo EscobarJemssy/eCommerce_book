@@ -11,13 +11,6 @@
     padding: 0 2rem; /* Añade el padding de tu `nav` para alineación horizontal */
 }
 
-
-.titulo {
-    text-align: center;
-    font-size: 31px;
-    color: var(--color-text); /* O el color que prefieras */
-}
-
 .carrusel-container h2 {
     font-family: var(--font-main); /* Usa tu fuente principal */
     font-weight: 700; /* Usa tu peso de fuente principal para h2 */

@@ -2,61 +2,69 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Footer from "../components/Footer";
-import { useCarrito } from "../components/ContCarrito"; // Asegúrate de que la ruta sea correcta
-import "../css/Carrito.css"; // Asegúrate de que la ruta sea correcta
+import { useCarrito } from "../components/ContCarrito";
+import "../css/Carrito.css";
 
-const RECARGO_DOMICILIO = 50;
+const RECARGO_DOMICILIO = 15;
 
 const Carrito = () => {
   const { carrito, eliminarProducto, limpiarCarrito } = useCarrito();
   const [metodo, setMetodo] = useState("local");
   const [tarjeta, setTarjeta] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [presupuesto, setPresupuesto] = useState("");
 
   const cantidad = carrito.length;
-  // Asegúrate de que item.price sea un número. Si es string, conviértelo.
-  const subtotal = carrito.reduce((acc, item) => acc + (parseFloat(item.price.replace('$', '')) || 0), 0); // Asumiendo que price viene como "$XX.XX"
+  const subtotal = carrito.reduce((acc, item) => acc + (parseFloat(item.price.replace('$', '')) || 0), 0);
   const total = metodo === "domicilio" ? subtotal + RECARGO_DOMICILIO : subtotal;
 
   const navegacion = useNavigate();
 
   const handleFinalizarCompra = () => {
-    if (!tarjeta || tarjeta.length < 12) { // Validación de longitud mínima de tarjeta
-      alert("Por favor ingresa un número de tarjeta válido (al menos 12 dígitos).");
+    if (!nombre.trim()) {
+      alert("Por favor ingresa tu nombre.");
       return;
     }
-    // Simula resultado aleatorio (1: éxito, 0: error)
-    const resultado = Math.floor(Math.random() * 2); // 0 o 1
-    if (resultado === 1) {
-      limpiarCarrito();
-      setTarjeta("");
-      alert("¡Compra realizada con éxito!");
-      navegacion("/"); // O a una página de confirmación
-    } else {
-      setTarjeta("");
-      alert("Error con la tarjeta. Intenta de nuevo.");
+    if (!presupuesto || isNaN(presupuesto) || Number(presupuesto) < 0) {
+      alert("Por favor ingresa un presupuesto válido.");
+      return;
     }
+    if (Number(presupuesto) < total) {
+      alert("Tu presupuesto es insuficiente para realizar la compra.");
+      return;
+    }
+    if (!tarjeta || tarjeta.length < 10) {
+      alert("Por favor ingresa un número de tarjeta válido (al menos 10 dígitos).");
+      return;
+    }
+    // limpieza de cambos y alerta de compra exitosa
+    limpiarCarrito();
+    setTarjeta("");
+    setNombre("");
+    setPresupuesto("");
+    alert("¡Compra realizada con éxito!");
+    navegacion("/");
   };
 
   return (
     <>
-      <div className="carrito-page-container"> {/* Contenedor principal de la página del carrito */}
-        <h1 className="page-title">Tu Carrito de Compras</h1> {/* Clase para el título de la página */}
+      <div className="carrito-page-container">
+        <h1 className="page-title">Tu Carrito de Compras</h1>
 
-        {/* Listar productos en el carrito */}
         {carrito.length === 0 ? (
-          <div className="empty-cart-message card"> {/* Estilo de tarjeta para mensaje de vacío */}
+          <div className="empty-cart-message card">
             <p>No hay productos en el carrito.</p>
             <button className="btn btn-primary" onClick={() => navegacion("/Libros")}>
               Explorar Libros
             </button>
           </div>
         ) : (
-          <div className="carrito-content-wrapper"> {/* Nuevo div para contener la lista y el resumen */}
-            <ul className="carrito-lista"> {/* Clase para la lista de productos */}
+          <div className="carrito-content-wrapper">
+            <ul className="carrito-lista">
               {carrito.map((item, index) => (
-                <li key={index} className="carrito-item"> {/* Clase para cada item del carrito */}
+                <li key={index} className="carrito-item">
                   <div className="item-details">
-                    <img src={item.images} alt={item.title} className="item-image" /> {/* Asegúrate que item.image exista */}
+                    <img src={item.image || 'https://via.placeholder.com/60x90?text=Libro'} alt={item.title} className="item-image" />
                     <div className="item-info">
                       <h3 className="item-title">{item.title}</h3>
                       <p className="item-price">${parseFloat(item.price.replace('$', '')).toFixed(2)}</p>
@@ -64,7 +72,7 @@ const Carrito = () => {
                   </div>
                   <button
                     onClick={() => eliminarProducto(item.index)}
-                    className="btn btn-danger btn-sm" // Clases para botones de acción (eliminar)
+                    className="btn btn-danger btn-sm"
                   >
                     Eliminar
                   </button>
@@ -73,7 +81,7 @@ const Carrito = () => {
             </ul>
 
             {/* Resumen de compra */}
-            <div className="resumen-compra card"> {/* Clase para el resumen de compra */}
+            <div className="resumen-compra card">
               <h2>Resumen del Pedido</h2>
               <p>Cantidad de artículos: <strong className="summary-value">{cantidad}</strong></p>
               <p>Subtotal: <strong className="summary-value">${subtotal.toFixed(2)}</strong></p>
@@ -106,29 +114,42 @@ const Carrito = () => {
                 <strong>Total a pagar: <span className="total-value">${total.toFixed(2)}</span></strong>
               </p>
 
-              {/* Input para el número de tarjeta */}
-              <input
-                type="number"
-                placeholder="Número de tarjeta (solo números)"
-                value={tarjeta}
-                onChange={e => setTarjeta(e.target.value)}
-                className="input-field" // Clase para inputs
-              // minLength={12} // minLength y maxLength no funcionan bien con type="number"
-              // maxLength={19}
-              />
+              {/* Inputs de datos del comprador */}
+              <div className="comprador-fields">
+                <input
+                  type="text"
+                  placeholder="Nombre del comprador"
+                  value={nombre}
+                  onChange={e => setNombre(e.target.value)}
+                  className="input-field"
+                />
+                <input
+                  type="number"
+                  placeholder="Presupuesto máximo"
+                  value={presupuesto}
+                  min={0}
+                  onChange={e => setPresupuesto(e.target.value)}
+                  className="input-field"
+                />
+                <input
+                  type="number"
+                  placeholder="Número de tarjeta (solo números)"
+                  value={tarjeta}
+                  onChange={e => setTarjeta(e.target.value)}
+                  className="input-field"
+                />
+              </div>
             </div>
           </div>
         )}
 
-        <div className="cart-actions"> {/* Contenedor para botones de acción */}
+        <div className="cart-actions">
           <button type="button" onClick={() => navegacion("/Libros")} className="btn btn-secondary">
             Seguir Comprando
           </button>
-
           <button type="button" onClick={() => navegacion("/")} className="btn btn-outline">
             Cancelar
           </button>
-
           {carrito.length > 0 && (
             <button onClick={handleFinalizarCompra} className="btn btn-primary">
               Finalizar Compra
