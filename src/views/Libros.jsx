@@ -1,59 +1,64 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import jsonData from "../assets/google_books_1299_clean_1.json"
+import jsonData from "../assets/google_books_1299_clean_1.json"; // Asegúrate de que la ruta sea correcta
+import "../css/Libros.css"; // Asegúrate de que la ruta sea correcta
 
 const Libros = () => {
-
-    // importacion para la navegacion de paginas
     const navegacion = useNavigate();
 
-    // variables para la muestra de items y scroll infinito
     const [Visibilidad, setVisibilidad] = useState([]);
     const [pagina, setPagina] = useState(0);
     const loaderRef = useRef(null);
     const LIMITE = 15;
 
-    // variables para filtrar
-    // autores
     const [autorSeleccionado, setAutorSeleccionado] = useState("Todos");
     const autoresUnicos = ["Todos", ...new Set(jsonData.map(libro => libro.author))];
-    // generos
+
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
     const categoriasUnicas = [
         "Todas", ...Array.from(new Set(jsonData.flatMap(libro => libro.generes && libro.generes !== "Undefined" ? libro.generes.split(",").map(g => g.trim()) : [])))
     ];
 
-    // Cargar la primera página de datos al inicio
+    // Cargar la primera página de datos al inicio y manejar la paginación del scroll
     useEffect(() => {
         const cargarPagina = () => {
             const inicio = pagina * LIMITE;
             const bucle = [];
 
+            // Asegura que no se superponga el tamaño del jsonData si se está ciclando
             for (let i = 0; i < LIMITE; i++) {
-                const index = (inicio + i) % jsonData.length;
-                bucle.push(jsonData[index]);
+                const dataIndex = (inicio + i) % jsonData.length;
+                bucle.push(jsonData[dataIndex]);
             }
 
+            // Simulación de carga (mantener para la funcionalidad de scroll)
             setTimeout(() => {
                 if (pagina === 0) {
                     setVisibilidad(bucle);
                 } else {
                     setVisibilidad(prev => [...prev, ...bucle]);
                 }
-            }, 1000);
+            }, 500); // Reducido el tiempo a 0.5s para una mejor UX
         };
 
         cargarPagina();
 
-    }, [pagina]);
+    }, [pagina]); // Dependencia solo de 'pagina'
 
-    // observer para el scroll infinito
+    // observer para el scroll infinito (NO SE MODIFICA LA LÓGICA)
     useEffect(() => {
         const observer = new IntersectionObserver(entradas => {
             if (entradas[0].isIntersecting) {
-                setPagina(prev => prev + 1);
+                // Solo cargar la siguiente página si los filtros no están aplicados
+                // Si quieres que el scroll infinito funcione con filtros, necesitarías otra lógica
+                // Por ahora, asumimos que se carga "sin filtrar" y el filtrado es posterior
+                if (autorSeleccionado === "Todos" && categoriaSeleccionada === "Todas") {
+                     setPagina(prev => prev + 1);
+                }
             }
+        }, {
+            threshold: 0.1 // Opciones del observer
         });
 
         if (loaderRef.current) observer.observe(loaderRef.current);
@@ -61,99 +66,87 @@ const Libros = () => {
         return () => {
             if (loaderRef.current) observer.unobserve(loaderRef.current);
         };
-    }, []);
+    }, [autorSeleccionado, categoriaSeleccionada]); // Agregamos dependencias para re-observar si cambian los filtros
 
-    // funcion para limpiar los filtros
+    // Función para limpiar los filtros
     function limpiarFiltros() {
         setAutorSeleccionado("Todos");
         setCategoriaSeleccionada("Todas");
+        // Cuando se limpian los filtros, reiniciamos la paginación
+        setPagina(0);
+        setVisibilidad([]); // Limpiar la lista para que se recargue desde el inicio
     }
+
+    // Filtrar los libros visibles por autor y categoría
+    const librosFiltrados = Visibilidad.filter(libro =>
+        (autorSeleccionado === "Todos" || libro.author === autorSeleccionado) &&
+        (categoriaSeleccionada === "Todas" || (libro.generes && libro.generes.includes(categoriaSeleccionada)))
+    );
 
 
     return (
-        <div style={{ height: '80vh', overflowY: 'auto' }}>
+        <div className="libros-page-container"> {/* Contenedor principal de la página */}
+            <h1 className="page-title">Explora Nuestros Libros</h1>
 
-            {/* filtros para autor y categoría */}
-            <div style={{ padding: '10px', display: 'flex', gap: '20px' }}>
-                <div>
-                    <label><strong>Filtrar por autor:</strong></label>
-                    <select value={autorSeleccionado} onChange={(e) => setAutorSeleccionado(e.target.value)}>
+            {/* Filtros para autor y categoría */}
+            <div className="filtros-container card"> {/* Contenedor de filtros con estilo de tarjeta */}
+                <div className="filter-group">
+                    <label className="filter-label"><strong>Filtrar por autor:</strong></label>
+                    <select value={autorSeleccionado} onChange={(e) => setAutorSeleccionado(e.target.value)} className="select-input">
                         {autoresUnicos.map((autor, i) => (
                             <option key={i} value={autor}>{autor}</option>
                         ))}
                     </select>
                 </div>
 
-                <div>
-                    <label><strong>Filtrar por categoría:</strong></label>
-                    <select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)}>
+                <div className="filter-group">
+                    <label className="filter-label"><strong>Filtrar por categoría:</strong></label>
+                    <select value={categoriaSeleccionada} onChange={(e) => setCategoriaSeleccionada(e.target.value)} className="select-input">
                         {categoriasUnicas.map((cat, i) => (
                             <option key={i} value={cat}>{cat}</option>
                         ))}
                     </select>
                 </div>
 
-                <button onClick={limpiarFiltros}>Limpiar filtros</button>
+                <button onClick={limpiarFiltros} className="btn btn-secondary">Limpiar filtros</button>
             </div>
 
-
-            {/* lista de libros filtrados */}
-            <ul>
-<<<<<<< HEAD
-                {Visibilidad
-                    .filter(libro =>
-                        (autorSeleccionado === "Todos" || libro.author === autorSeleccionado) &&
-                        (categoriaSeleccionada === "Todas" || (libro.generes && libro.generes.includes(categoriaSeleccionada)))
-                    )
-                    .map((libro, index) => (
-
-                        <li key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '15px' }}>
+            {/* Lista de libros filtrados */}
+            {librosFiltrados.length === 0 ? (
+                <div className="empty-results-message card">
+                    <p>No se encontraron libros con los filtros seleccionados.</p>
+                </div>
+            ) : (
+                <ul className="libros-grid"> {/* Usamos un grid para mostrar los libros */}
+                    {librosFiltrados.map((libro, idx) => (
+                        <li key={idx} className="libro-item" onClick={() => navegacion(`/DetalleLibro/${libro.index}`)}>
                             <img
-                                src="https://cdn.shopify.com/s/files/1/2482/2494/files/Cuentos_de_los_hermanos_Grimm_480x480.jpg?v=1629400827"
+                                src={libro.images} // Usa la imagen del libro o placeholder
                                 alt={libro.title}
-                                style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
+                                className="libro-cover"
                             />
-                            <div>
-                                <strong>Nombre:</strong> {libro.title}<br />
-                                <strong>Tipo:</strong> {libro.author}<br />
-                                <strong>Precio:</strong> {libro.price}<br />
-                                <strong>Fecha:</strong> {libro.published_date}
+                            <div className="libro-info">
+                                <h3 className="libro-title">{libro.title}</h3>
+                                <p className="libro-author"><strong>Autor:</strong> {libro.author}</p>
+                                <p className="libro-price"><strong>Precio:</strong> <span className="price-value">{libro.price}</span></p>
                             </div>
-=======
-                {Visibilidad.map((libro, index) => (
-                    <li key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc', display: 'flex', gap: '15px' }}>
-                        <img
-                            src="https://cdn.shopify.com/s/files/1/2482/2494/files/Cuentos_de_los_hermanos_Grimm_480x480.jpg?v=1629400827"
-                            alt={libro.title}
-                            style={{ width: '100px', height: 'auto', objectFit: 'cover' }}
-                        />
-                        <div>
-                            <strong>Nombre:</strong> {libro.title}<br />
-                            <strong>Autor:</strong> {libro.author}<br />
-                            <strong>Precio:</strong> {libro.price}<br />
-                            <strong>Fecha de publicación:</strong> {libro.published_date}<br />
-                            <strong>Descripción:</strong> {libro.description}<br />
-                            <strong>Editorial:</strong> {libro.publisher}<br />
-                            <strong>ISBN:</strong> {libro.ISBN}<br />
-                            <strong>Idioma:</strong> {libro.language}<br />
-                            <strong>Páginas:</strong> {libro.page_count}<br />
-                        </div>
-
-                        <button type="button" onClick={() => Redireccion(libro.index)}>Ver Mas!</button>
-                        <button type="button">Llevar al Carrito</button>
->>>>>>> 1f5b6f2cdde3f2a3fb148d87cec0976a3e697079
-
-                            <button type="button" onClick={() => {navegacion(`/DetalleLibro/${index}`);}}>Ver Mas!</button>
-
+                            {/* El botón "Ver Mas!" se puede quitar, ya que el click en el LI entero lleva a los detalles */}
+                            {/* <button type="button" className="btn btn-primary btn-sm">Ver Más</button> */}
                         </li>
                     ))}
-            </ul>
-            <div ref={loaderRef} style={{ padding: '20px', textAlign: 'center' }}>
-                Cargando más archivos...
+                </ul>
+            )}
+
+            {/* Loader para el scroll infinito (NO SE MODIFICA EL ATRIBUTO ref) */}
+            <div ref={loaderRef} className="loader-message">
+                {/* Solo muestra el mensaje si hay libros y los filtros están en "Todos" */}
+                {librosFiltrados.length > 0 && autorSeleccionado === "Todos" && categoriaSeleccionada === "Todas" && (
+                    <p>Cargando más libros...</p>
+                )}
+                {/* Puedes añadir un spinner si quieres */}
             </div>
         </div>
     );
-
 };
 
 export default Libros;

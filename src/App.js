@@ -5,22 +5,22 @@ import Carrito from './views/Carrito';
 import Libros from './views/Libros';
 import DetallesLibros from './views/DetallesLibros';
 import { CarritoProvider } from './components/ContCarrito';
+import img from "./assets/logo.jpeg"; 
 
 function App() {
   return (
-
+    
     <CarritoProvider>
-
       <Router>
-
         <header>
-          <nav>
-            <img src='' alt=''></img>
+          <nav> 
+            <img src={img} alt='Logo' />
+            <p>Guardian de libros</p>
             <Link to="/">Inicio</Link>
-            <Link to="/Carrito">Carrito</Link>
+            <Link to="/Carrito">Carrito</Link> 
             <Link to="/Libros">Libros</Link>
           </nav>
-        </header>
+        </header>   
 
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -29,9 +29,7 @@ function App() {
           <Route path="/DetalleLibro/:index" element={<DetallesLibros />} />
         </Routes>
       </Router>
-
-    </CarritoProvider >
-
+    </CarritoProvider>
   );
 }
 

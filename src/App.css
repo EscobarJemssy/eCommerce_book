@@ -1,38 +1,96 @@
-.App {
-  text-align: center;
+/* ==========================
+   Variables y Tipografía Base
+   ========================== */
+:root {
+  --color-bg: #fff;
+  --color-text: #181818;
+  --color-gray: #f5f6fa;
+  --color-gray-dark: #d1d5db;
+  --color-accent: #0074F0; /* Azul eléctrico */
+  --color-accent-hover: #005bb5;
+  --radius: 14px;
+  --shadow: 0 4px 16px 0 rgba(0,0,0,0.07);
+  --transition: 0.25s cubic-bezier(.4,0,.2,1);
+  --font-main: 'Bahnschrift Light';
+
+  /* Colores inspirados en el gato guerrero */
+  --color-cat-dark-blue: #3E4E5A; /* Azul oscuro del cuerpo y armadura */
+  --color-cat-light-blue: #5D727C; /* Tonos más claros de la armadura */
+  --color-cat-eye-orange: #F2A400; /* Naranja brillante de los ojos */
+  --color-cat-white-whisker: #F0F0F0; /* Blanco de los bigotes y nariz */
+  --color-cat-shadow-blue: #2A3B45; /* Azul casi negro de las sombras profundas */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+/* barra de navegacion */
+header {
+  background: var(--color-bg); /* Usa tu color de fondo */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04); /* Sombra suave */
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: box-shadow var(--transition); /* Transición */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+nav {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+nav img {
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--color-gray);
+  box-shadow: var(--shadow);
+  margin-right: 1.5rem;
+  transition: box-shadow var(--transition);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+nav a {
+  color: var(--color-text); /* Color de texto */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-left: 2rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius);
+  transition: 
+    background var(--transition),
+    color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  position: relative;
+}
+
+nav a:hover, nav a.active {
+  background: var(--color-accent); /* Color de acento al hover/activo */
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 116, 240, 0.10);
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* ... (continúa con tus media queries para nav) ... */
+@media (max-width: 900px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  nav a {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding: 0 0.5rem;
   }
 }
