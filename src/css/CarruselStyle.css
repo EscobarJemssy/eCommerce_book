@@ -1,0 +1,214 @@
+/* ==========================
+   Carrusel (ajustado a los estilos generales con microinteracciones)
+   ========================== */
+.carrusel-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 1100px; /* Alineado con el max-width de tu `nav` */
+    margin: 40px auto;
+    font-family: 'Bahnschrift Light'; /* Usa tu fuente principal */
+    color: var(--color-text); /* Usa tu color de texto principal */
+    padding: 0 2rem; /* Añade el padding de tu `nav` para alineación horizontal */
+}
+
+.carrusel-container h2 {
+    font-family: var(--font-main); /* Usa tu fuente principal */
+    font-weight: 700; /* Usa tu peso de fuente principal para h2 */
+    color: var(--color-text); /* Usa tu color de texto principal */
+    font-size: 1.5rem; /* Alineado con el font-size de tu h2 general */
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--color-accent); /* Línea inferior con tu color de acento principal */
+    padding-bottom: 10px;
+    letter-spacing: -0.5px; /* Alineado con tu letter-spacing general */
+}
+
+.carrusel-horizontal-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.carrusel-horizontal-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.carrusel-horizontal {
+    display: inline-flex;
+    gap: 2rem; /* Alineado con tu `gap` de `.grid` y `.libros-lista` */
+    padding: 1rem;
+    justify-content: flex-start;
+    min-width: 100%;
+}
+
+.cat {
+    flex: 0 0 auto;
+    width: 260px; /* Ancho base alineado con tu grid */
+    background: var(--color-bg); /* Fondo de la tarjeta, usando tu variable */
+    border-radius: var(--radius); /* Bordes redondeados, usando tu variable */
+    box-shadow: var(--shadow); /* Sombra inicial sutil, usando tu variable */
+    padding: 1.5rem; /* Padding, alineado con `.libro-item` */
+    text-align: center;
+    /* Transiciones mejoradas para el hover */
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); /* Transiciones completas */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeIn 0.7s ease; /* Usa tu animación de entrada */
+    border: 1px solid transparent; /* Borde transparente para transición */
+}
+
+.cat:hover {
+    transform: scale(1.03); /* Efecto de escala sutil al 3% */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más grande y visible al hover */
+    border-color: var(--color-accent); /* Borde que se ilumina con el color acento */
+}
+
+.cat img {
+    width: 120px; /* Ancho de imagen, alineado con `.libro-item img` */
+    height: 180px; /* Alto de imagen, alineado con `.libro-item img` */
+    object-fit: cover;
+    border-radius: var(--radius); /* Bordes redondeados, usando tu variable */
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra de la imagen */
+    transition: transform var(--transition); /* Transición para la imagen en hover */
+}
+
+.cat:hover img {
+    transform: translateY(-5px); /* La imagen se mueve un poco hacia arriba al hover */
+}
+
+.cat h3 {
+    font-family: var(--font-main); /* Usa tu fuente principal */
+    font-weight: 700; /* Peso de fuente */
+    font-size: 1.2em;
+    margin: 10px 0 5px;
+    color: var(--color-text); /* Usa tu color de texto principal */
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.4em;
+    line-height: 1.2em;
+    transition: color var(--transition); /* Transición para el color del título */
+}
+
+.cat:hover h3 {
+    color: var(--color-accent); /* Título cambia a color acento al hover */
+}
+
+.cat p {
+    font-size: 0.9em;
+    color: #444; /* Color de texto */
+    line-height: 1.7; /* Alineado con tus p generales */
+    margin: 5px 0;
+    white-space: normal;
+}
+
+.cat p:last-child {
+    font-weight: bold;
+    color: var(--color-accent); /* Precio con tu color de acento principal */
+    font-size: 1.1em;
+    margin-top: 10px;
+    transition: color var(--transition); /* Transición para el color del precio */
+}
+
+.cat:hover p:last-child {
+    color: var(--color-accent-hover); /* Precio se oscurece un poco al hover */
+}
+
+/* Estilos para las flechas de navegación */
+.carrusel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-accent); /* Fondo de las flechas con tu color de acento */
+    color: #fff; /* Color de la flecha blanco, como tus botones */
+    border: none;
+    padding: 0;
+    font-size: 1.8em;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    width: 48px; /* Ancho de flecha, similar a tu logo */
+    height: 48px; /* Alto de flecha, similar a tu logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition); /* Transiciones completas */
+    box-shadow: var(--shadow); /* Sombra, usando tu variable */
+}
+
+.carrusel-arrow:hover {
+    background: var(--color-accent-hover); /* Color al pasar el ratón, usando tu variable */
+    box-shadow: 0 6px 24px rgba(0, 116, 240, 0.13); /* Sombra al hover, alineado con tus botones */
+    transform: translateY(-50%) scale(1.05); /* Efecto de escala */
+}
+
+.carrusel-arrow:active {
+    transform: translateY(-50%) scale(0.98); /* Efecto de clic */
+}
+
+.left-arrow {
+    left: -20px;
+}
+
+.right-arrow {
+    right: -20px;
+}
+
+/* Cartel bienvenida */
+/* ==========================
+   Banner de Bienvenida
+   ========================== */
+.welcome-banner {
+    max-width: 1100px; /* Alineado con tu max-width general */
+    margin: 40px auto; /* Centrado y con margen superior/inferior */
+    padding: 3rem 2rem; /* Relleno generoso para un banner */
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%); /* Degradado con tus colores de acento */
+    color: #fff; /* Texto blanco para contraste */
+    border-radius: var(--radius); /* Bordes redondeados */
+    box-shadow: 0 8px 32px rgba(0, 116, 240, 0.2); /* Sombra más pronunciada */
+    text-align: center;
+    position: relative; /* Para posibles elementos decorativos */
+    overflow: hidden; /* Para contener cualquier elemento flotante */
+    animation: fadeIn 1s ease-out; /* Animación de entrada suave */
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); /* Efecto de brillo sutil */
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+
+.welcome-banner h2 {
+    font-family: var(--font-main); /* Usa tu fuente principal */
+    font-weight: 800; /* Más negrita para un título de bienvenida */
+    font-size: 2.8rem; /* Tamaño de fuente impactante */
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sombra de texto suave */
+    color: var(--color-cat-white-whisker); /* Color blanco para el título, inspirado en el gato */
+}
+
+.welcome-banner p {
+    font-family: var(--font-main); /* Usa tu fuente principal */
+    font-size: 1.2rem; /* Tamaño de fuente legible para la descripción */
+    line-height: 1.6;
+    max-width: 700px; /* Limita el ancho del párrafo para legibilidad */
+    margin: 0.5rem auto 0; /* Centra el párrafo */
+    color: rgba(255, 255, 255, 0.9); /* Blanco ligeramente translúcido */
+}

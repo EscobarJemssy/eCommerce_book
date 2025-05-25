@@ -1,0 +1,187 @@
+/* ==========================
+   Página de Exploración de Libros (Libros.jsx)
+   ========================== */
+.libros-page-container {
+    max-width: 1100px; /* Alineado con tu max-width general */
+    margin: 40px auto; /* Espacio superior e inferior */
+    padding: 0 2rem; /* Alineado con el padding de tu nav y carrusel */
+    font-family: var(--font-main); /* Usa tu fuente principal */
+    color: var(--color-text); /* Color de texto principal */
+}
+
+.libros-page-container .page-title {
+    font-family: var(--font-main);
+    font-weight: 700;
+    color: var(--color-text); /* */
+    font-size: 2.2rem; /* Tamaño de título de página */
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--color-accent); /* */
+    letter-spacing: -0.5px;
+}
+
+/* Contenedor de filtros */
+.filtros-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    gap: 1.5rem; /* Espacio entre los grupos de filtros */
+    justify-content: center; /* Centra los filtros */
+    padding: 1.5rem; /* Relleno consistente con tus tarjetas */
+    margin-bottom: 30px;
+    align-items: center; /* Alinea los elementos verticalmente */
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column; /* Apila label y select */
+    gap: 0.5rem;
+    align-items: flex-start; /* Alinea el texto a la izquierda */
+}
+
+.filter-label {
+    font-size: 0.95rem;
+    color: var(--color-text); /* */
+    font-weight: 600;
+}
+
+.select-input {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--color-gray-dark); /* */
+    border-radius: var(--radius); /* */
+    background-color: var(--color-gray); /* */
+    font-family: var(--font-main); /* */
+    font-size: 1rem;
+    color: var(--color-text); /* */
+    appearance: none; /* Elimina estilos nativos del select */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230074F0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Icono de flecha personalizado */
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 1.2em;
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition); /* */
+}
+
+.select-input:hover {
+    border-color: var(--color-accent); /* */
+}
+
+.select-input:focus {
+    outline: none;
+    border-color: var(--color-accent); /* */
+    box-shadow: 0 0 0 3px rgba(0, 116, 240, 0.2); /* */
+}
+
+/* Mensaje de no resultados */
+.empty-results-message {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+/* Grid para la lista de libros */
+.libros-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Ajusta el tamaño de la tarjeta */
+    gap: 2rem; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas si hay espacio extra */
+}
+
+.libro-item {
+    background: var(--color-bg); /* */
+    border-radius: var(--radius); /* */
+    box-shadow: var(--shadow); /* */
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer; /* Indica que es clicable */
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition); /* */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid transparent; /* Borde transparente para transición */
+}
+
+.libro-item:hover {
+    transform: scale(1.03); /* Efecto de escala sutil al 3% */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más grande */
+    border-color: var(--color-accent); /* Borde que se ilumina con el color acento */
+}
+
+.libro-cover {
+    width: 150px; /* Ancho fijo para las portadas */
+    height: 220px; /* Alto fijo para las portadas */
+    object-fit: cover;
+    border-radius: var(--radius); /* */
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra de la imagen */
+    transition: transform var(--transition); /* */
+}
+
+.libro-item:hover .libro-cover {
+    transform: translateY(-5px); /* La imagen se mueve un poco hacia arriba al hover */
+}
+
+.libro-info {
+    flex-grow: 1; /* Permite que la info ocupe espacio */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.libro-title {
+    font-family: var(--font-main); /* */
+    font-weight: 700;
+    font-size: 1.1em;
+    margin: 0 0 0.5rem;
+    color: var(--color-text); /* */
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 2.8em; /* Limita a 2 líneas */
+    line-height: 1.4em;
+    transition: color var(--transition); /* */
+}
+
+.libro-item:hover .libro-title {
+    color: var(--color-accent); /* Título cambia a color acento al hover */
+}
+
+.libro-author {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 1rem;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.libro-price {
+    font-weight: bold;
+    color: var(--color-accent); /* */
+    font-size: 1.1em;
+    margin-top: auto; /* Empuja el precio al final del flex container */
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--color-gray-dark); /* Separador suave */
+    width: 100%;
+}
+
+.libro-price .price-value {
+    color: var(--color-cat-eye-orange); /* Color naranja para el precio */
+}
+
+/* Loader para el scroll infinito */
+.loader-message {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #888;
+    margin-top: 20px;
+    margin-bottom: 40px; /* Asegura espacio para el footer */
+}
