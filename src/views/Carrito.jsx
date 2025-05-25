@@ -8,18 +8,23 @@ import "../css/Carrito.css";
 const RECARGO_DOMICILIO = 15;
 
 const Carrito = () => {
+  // Obtiene el carrito y funciones para manipularlo desde el contexto global
   const { carrito, eliminarProducto, limpiarCarrito } = useCarrito();
+
+  // Estados para los datos del comprador y método de envío
   const [metodo, setMetodo] = useState("local");
   const [tarjeta, setTarjeta] = useState("");
   const [nombre, setNombre] = useState("");
   const [presupuesto, setPresupuesto] = useState("");
 
+  // Calcula cantidad, subtotal y total según el método de envío
   const cantidad = carrito.length;
   const subtotal = carrito.reduce((acc, item) => acc + (parseFloat(item.price.replace('$', '')) || 0), 0);
   const total = metodo === "domicilio" ? subtotal + RECARGO_DOMICILIO : subtotal;
 
   const navegacion = useNavigate();
 
+  // Valida los datos y finaliza la compra
   const handleFinalizarCompra = () => {
     if (!nombre.trim()) {
       alert("Por favor ingresa tu nombre.");
@@ -37,7 +42,7 @@ const Carrito = () => {
       alert("Por favor ingresa un número de tarjeta válido (al menos 10 dígitos).");
       return;
     }
-    // limpieza de cambos y alerta de compra exitosa
+    // Limpia el carrito y los campos, muestra mensaje y redirige al inicio
     limpiarCarrito();
     setTarjeta("");
     setNombre("");
@@ -51,6 +56,7 @@ const Carrito = () => {
       <div className="carrito-page-container">
         <h1 className="page-title">Tu Carrito de Compras</h1>
 
+        {/* Si el carrito está vacío, muestra mensaje y botón para explorar */}
         {carrito.length === 0 ? (
           <div className="empty-cart-message card">
             <p>No hay productos en el carrito.</p>
@@ -59,17 +65,20 @@ const Carrito = () => {
             </button>
           </div>
         ) : (
+          // Si hay productos, muestra la lista y el resumen de compra
           <div className="carrito-content-wrapper">
             <ul className="carrito-lista">
               {carrito.map((item, index) => (
                 <li key={index} className="carrito-item">
                   <div className="item-details">
+                    {/* Imagen y datos del libro */}
                     <img src={item.image || 'https://via.placeholder.com/60x90?text=Libro'} alt={item.title} className="item-image" />
                     <div className="item-info">
                       <h3 className="item-title">{item.title}</h3>
                       <p className="item-price">${parseFloat(item.price.replace('$', '')).toFixed(2)}</p>
                     </div>
                   </div>
+                  {/* Botón para eliminar producto */}
                   <button
                     onClick={() => eliminarProducto(item.index)}
                     className="btn btn-danger btn-sm"
@@ -80,12 +89,13 @@ const Carrito = () => {
               ))}
             </ul>
 
-            {/* Resumen de compra */}
+            {/* Resumen de compra y formulario de datos */}
             <div className="resumen-compra card">
               <h2>Resumen del Pedido</h2>
               <p>Cantidad de artículos: <strong className="summary-value">{cantidad}</strong></p>
               <p>Subtotal: <strong className="summary-value">${subtotal.toFixed(2)}</strong></p>
 
+              {/* Selección de método de envío */}
               <div className="metodo-envio-options">
                 <h3>Método de Envío</h3>
                 <label className="radio-label">
@@ -114,7 +124,7 @@ const Carrito = () => {
                 <strong>Total a pagar: <span className="total-value">${total.toFixed(2)}</span></strong>
               </p>
 
-              {/* Inputs de datos del comprador */}
+              {/* Campos para datos del comprador */}
               <div className="comprador-fields">
                 <input
                   type="text"
@@ -143,6 +153,7 @@ const Carrito = () => {
           </div>
         )}
 
+        {/* Botones de acción */}
         <div className="cart-actions">
           <button type="button" onClick={() => navegacion("/Libros")} className="btn btn-secondary">
             Seguir Comprando
@@ -157,6 +168,7 @@ const Carrito = () => {
           )}
         </div>
 
+        {/* Pie de página */}
         <Footer />
       </div>
     </>

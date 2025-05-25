@@ -1,67 +1,64 @@
-/* ==========================
-   Página del Carrito de Compras
-   ========================== */
 .carrito-page-container {
-    max-width: 1100px; /* Alineado con tu max-width general */
-    margin: 40px auto; /* Espacio superior e inferior */
-    padding: 0 2rem; /* Alineado con el padding de tu nav y carrusel */
-    font-family: var(--font-main); /* Usa tu fuente principal */
-    color: var(--color-text); /* Color de texto principal */
-    animation: fadeIn 0.8s ease-out; /* Animación de entrada para la página */
+    max-width: 1100px; 
+    margin: 40px auto; 
+    padding: 0 2rem; 
+    font-family: var(--font-main); 
+    color: var(--color-text);
+    animation: fadeIn 0.8s ease-out;
 }
 
 .carrito-page-container .page-title {
     font-family: var(--font-main);
     font-weight: 700;
-    color: var(--color-text); /* */
-    font-size: 2.2rem; /* Tamaño de título ligeramente más grande que h2 de sección */
+    color: var(--color-text); 
+    font-size: 2.2rem; 
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 2px solid var(--color-accent); /* */
+    border-bottom: 2px solid var(--color-accent); 
     letter-spacing: -0.5px;
 }
 
 .empty-cart-message {
     text-align: center;
-    padding: 3rem; /* Espacio para el mensaje */
+    padding: 3rem;
     font-size: 1.2rem;
     color: #666;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 40px; /* Espacio antes del footer */
+    margin-bottom: 40px; 
 }
 
-/* Contenedor flexible para lista de productos y resumen */
+
 .carrito-content-wrapper {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Lista de productos a la izquierda, resumen a la derecha */
-    gap: 2rem; /* Espacio entre las columnas */
+    grid-template-columns: 2fr 1fr; 
+    gap: 2rem;
     margin-bottom: 40px;
 }
 
-/* Estilos de la lista de productos en el carrito */
+
 .carrito-lista {
-    list-style: none; /* Eliminar viñetas predeterminadas */
+    list-style: none; 
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Espacio entre cada item del carrito */
+    gap: 1rem;
 }
 
 .carrito-item {
-    background: var(--color-bg); /* */
-    border-radius: var(--radius); /* */
-    box-shadow: var(--shadow); /* */
+    background: var(--color-bg);
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow); 
     padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: transform var(--transition), box-shadow var(--transition); /* */
-    border: 1px solid var(--color-gray); /* Borde sutil */
+    transition: transform var(--transition), box-shadow var(--transition); 
+    border: 1px solid var(--color-gray); 
 }
 
 .carrito-item:hover {
@@ -73,55 +70,55 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex-grow: 1; /* Permite que los detalles ocupen el espacio disponible */
+    flex-grow: 1;   
 }
 
 .carrito-item .item-image {
     width: 60px;
     height: 90px;
     object-fit: cover;
-    border-radius: var(--radius); /* */
+    border-radius: var(--radius);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .carrito-item .item-info {
-    flex-grow: 1; /* Permite que la información ocupe el espacio */
+    flex-grow: 1;
 }
 
 .carrito-item .item-title {
     font-weight: 600;
     font-size: 1.1rem;
-    color: var(--color-text); /* */
+    color: var(--color-text); 
     margin: 0 0 0.2rem 0;
     line-height: 1.3;
 }
 
 .carrito-item .item-price {
     font-weight: bold;
-    color: var(--color-accent); /* */
+    color: var(--color-accent);
     font-size: 1rem;
     margin: 0;
 }
 
-/* Estilos del resumen de compra */
+
 .resumen-compra {
-    background: var(--color-bg); /* */
-    border-radius: var(--radius); /* */
-    box-shadow: var(--shadow); /* */
+    background: var(--color-bg); 
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem; /* Espacio entre elementos del resumen */
-    border: 1px solid var(--color-gray-dark); /* Borde sutil */
+    gap: 0.8rem; 
+    border: 1px solid var(--color-gray-dark); 
 }
 
 .resumen-compra h2 {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--color-text); /* */
+    color: var(--color-text); 
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-gray-dark); /* Separador */
+    border-bottom: 1px solid var(--color-gray-dark); 
 }
 
 .resumen-compra p {
@@ -131,14 +128,14 @@
 }
 
 .resumen-compra .summary-value {
-    color: var(--color-accent); /* */
+    color: var(--color-accent); 
     font-weight: 600;
 }
 
 .metodo-envio-options {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px dashed var(--color-gray-dark); /* Separador de opciones de envío */
+    border-top: 1px dashed var(--color-gray-dark); 
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -147,7 +144,7 @@
 .metodo-envio-options h3 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--color-text); /* */
+    color: var(--color-text);
     margin-bottom: 0.5rem;
 }
 
@@ -161,50 +158,50 @@
 
 .radio-label input[type="radio"] {
     margin-right: 0.5rem;
-    accent-color: var(--color-accent); /* Color del radio button */
+    accent-color: var(--color-accent); 
 }
 
 .delivery-cost {
     font-weight: bold;
-    color: var(--color-cat-eye-orange); /* Un toque del color del gato para el recargo */
+    color: var(--color-cat-eye-orange); 
 }
 
 .total-label {
     font-size: 1.3rem;
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 2px solid var(--color-gray-dark); /* Separador fuerte para el total */
+    border-top: 2px solid var(--color-gray-dark); 
 }
 
 .total-label .total-value {
-    color: var(--color-cat-eye-orange); /* Color naranja para el total */
+    color: var(--color-cat-eye-orange); 
     font-size: 1.4em;
 }
 
-/* Estilos para el input de tarjeta */
+
 .input-field {
     width: 90%;
     padding: 0.8rem 1rem;
     margin-top: 1rem;
-    border: 1px solid var(--color-gray-dark); /* */
-    border-radius: var(--radius); /* */
-    font-family: var(--font-main); /* */
+    border: 1px solid var(--color-gray-dark); 
+    border-radius: var(--radius);
+    font-family: var(--font-main); 
     font-size: 1rem;
-    color: var(--color-text); /* */
-    background: var(--color-gray); /* Fondo ligero */
-    transition: border-color var(--transition), box-shadow var(--transition); /* */
+    color: var(--color-text);
+    background: var(--color-gray); 
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .input-field:focus {
-    border-color: var(--color-accent); /* */
-    box-shadow: 0 0 0 3px rgba(0, 116, 240, 0.2); /* Sombra de foco */
+    border-color: var(--color-accent); 
+    box-shadow: 0 0 0 3px rgba(0, 116, 240, 0.2); 
     outline: none;
 }
 
-/* Contenedor de botones de acción */
+
 .cart-actions {
     display: flex;
-    justify-content: center; /* Centrar los botones */
-    gap: 1.5rem; /* Espacio entre los botones */
-    margin-top: 40px; /* Espacio sobre los botones */
+    justify-content: center; 
+    gap: 1.5rem;
+    margin-top: 40px;
 }

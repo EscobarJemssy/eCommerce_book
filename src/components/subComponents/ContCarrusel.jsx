@@ -1,46 +1,53 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const ContCarrusel = ({category}) => { // category is the prop passed from Carrusel
+// Componente principal del carrusel, recibe la lista de libros por categoría
+const ContCarrusel = ({category}) => { 
 
+    // Estado para el índice actual del carrusel
     const [currentIndex, setCurrentIndex] = useState(0);
+    // Referencia al contenedor del carrusel para manipular el scroll
     const carruselRef = useRef(null);
+    // Número de elementos visibles a la vez
     const Limite = 5; 
 
+    // Función para mover el carrusel a la derecha manualmente
     const Derecha = () => {
         if (carruselRef.current) {
-            const itemWidth = 200 + 20; // Ancho del item (200px) + gap (20px)
+            const itemWidth = 200 + 20; // Ancho del item + margen
             carruselRef.current.scrollBy({
-                left: itemWidth * Limite, // Desplaza por la cantidad de elementos visibles
+                left: itemWidth * Limite, 
                 behavior: 'smooth'
             });
         }
     };
 
+    // Función para mover el carrusel a la izquierda manualmente
     const Izquierda = () => {
         if (carruselRef.current) {
-            const itemWidth = 200 + 20; // Ancho del item (200px) + gap (20px)
+            const itemWidth = 200 + 20; 
             carruselRef.current.scrollBy({
-                left: -itemWidth * Limite, // Desplaza hacia la izquierda por la cantidad de elementos visibles
+                left: -itemWidth * Limite, 
                 behavior: 'smooth'
             });
         }
     };
 
+    // Efecto para manejar eventos de scroll y detectar límites del carrusel
     useEffect(() => {
         const carousel = carruselRef.current;
         if (!carousel) return;
 
         const handleScroll = () => {
-
             const scrollWidth = carousel.scrollWidth;
             const clientWidth = carousel.clientWidth;
             const scrollLeftPos = carousel.scrollLeft;
+            const threshold = 50; // Margen para detectar el final/inicio
 
-            const threshold = 50; 
-
+            // Aquí se pueden agregar acciones al llegar al final/inicio del carrusel
             if (scrollLeftPos + clientWidth >= scrollWidth - threshold && category.length > Limite) {
- 
+                // Al final del carrusel
             } else if (scrollLeftPos <= threshold && scrollLeftPos !== 0 && category.length > Limite) {
+                // Al inicio del carrusel
             }
         };
 
@@ -48,10 +55,12 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
         return () => carousel.removeEventListener('scroll', handleScroll);
     }, [category.length, Limite]);
 
+    // Devuelve los elementos visibles (aquí retorna todos, pero se puede limitar)
     const getVisibleItems = () => {
         return category; 
     };
 
+    // Avanza el carrusel a la siguiente página de elementos
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + Limite) % category.length);
         if (carruselRef.current) {
@@ -61,6 +70,7 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
                 left: newScrollPos,
                 behavior: 'smooth'
             });
+            // Si llega al final, vuelve al inicio
             if (currentIndex + Limite >= category.length) {
                 setTimeout(() => {
                     carruselRef.current.scrollTo({ left: 0, behavior: 'instant' });
@@ -70,6 +80,7 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
         }
     };
 
+    // Retrocede el carrusel a la página anterior de elementos
     const handlePrev = () => {
         setCurrentIndex((prevIndex) => {
             const newIndex = prevIndex - Limite;
@@ -84,6 +95,7 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
                 behavior: 'smooth'
             });
 
+            // Si llega al inicio, salta al final
             if (currentIndex - Limite < 0) {
                  setTimeout(() => {
                     const lastScrollPos = (category.length - Limite) * itemWidth;
@@ -94,13 +106,16 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
         }
     };
 
+    // Duplica los elementos para lograr efecto de carrusel infinito
     const itemsToRender = [...category, ...category, ...category];
 
     return (
-        <div className="carrusel-wrapper"> {/* Contenedor para las flechas y el carrusel */}
-            <button className="carrusel-arrow left-arrow" onClick={handlePrev}>&#9664;</button> {/* Flecha izquierda */}
-            <div className="carrusel-horizontal-wrapper" ref={carruselRef}> {/* Se le asigna la ref */}
+        <div className="carrusel-wrapper"> 
+            {/* Flecha para retroceder */}
+            <button className="carrusel-arrow left-arrow" onClick={handlePrev}>&#9664;</button> 
+            <div className="carrusel-horizontal-wrapper" ref={carruselRef}>
                 <div className="carrusel-horizontal">
+                    {/* Renderiza los libros del carrusel */}
                     {itemsToRender.map((cat, index) => (
                         <div key={`${cat.index}-${index}`} className="cat"> 
                             <img src={cat.images} alt={cat.title} />
@@ -111,10 +126,10 @@ const ContCarrusel = ({category}) => { // category is the prop passed from Carru
                     ))}
                 </div>
             </div>
-            <button className="carrusel-arrow right-arrow" onClick={handleNext}>&#9654;</button> {/* Flecha derecha */}
+            {/* Flecha para avanzar */}
+            <button className="carrusel-arrow right-arrow" onClick={handleNext}>&#9654;</button>
         </div>
     );
 }
 
 export default ContCarrusel;
-

@@ -1,29 +1,25 @@
-/* ==========================
-   Página de Detalles de Libro
-   ========================== */
 .book-detail-container {
-    max-width: 1100px; /* Alineado con tu max-width general */
-    margin: 40px auto; /* Espacio superior e inferior */
-    padding: 0 2rem; /* Alineado con el padding de tu nav y carrusel */
-    font-family: var(--font-main); /* Usa tu fuente principal */
-    color: var(--color-text); /* Color de texto principal */
-    animation: fadeIn 0.8s ease-out; /* Animación de entrada para la página */
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 2rem;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    animation: fadeIn 0.8s ease-out;
 }
 
 .book-detail-container .page-title {
     font-family: var(--font-main);
-    font-weight: 800; /* Un poco más audaz para el título del libro */
-    color: var(--color-text); /* */
-    font-size: 2.5rem; /* Tamaño de título grande para el libro */
+    font-weight: 800;
+    color: var(--color-text);
+    font-size: 2.5rem;
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 15px;
-    border-bottom: 2px solid var(--color-accent); /* */
+    border-bottom: 2px solid var(--color-accent);
     letter-spacing: -0.5px;
-    line-height: 1.2; /* Para títulos largos */
+    line-height: 1.2;
 }
 
-/* Estilo para el estado de libro no encontrado */
 .book-detail-container.empty-state {
     text-align: center;
     padding: 3rem;
@@ -38,76 +34,74 @@
     margin-bottom: 1.5rem;
 }
 
-
-/* Contenedor flexible para imagen y detalles */
 .book-content-wrapper {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Imagen a la izquierda, detalles a la derecha */
-    gap: 2rem; /* Espacio entre las columnas */
-    align-items: flex-start; /* Alinea los elementos al inicio de la grilla */
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    align-items: flex-start;
     margin-bottom: 40px;
 }
 
 .book-image-area {
     display: flex;
-    justify-content: center; /* Centra la imagen */
-    align-items: flex-start; /* Alinea la imagen a la parte superior si el contenedor es más alto */
-    padding: 1rem; /* Espacio alrededor de la imagen */
-    background: var(--color-bg); /* Fondo blanco para la imagen */
-    border-radius: var(--radius); /* */
-    box-shadow: var(--shadow); /* */
-    transition: transform var(--transition), box-shadow var(--transition); /* */
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
 }
 
 .book-image-area:hover {
-    transform: translateY(-5px); /* Pequeño efecto de elevación al hover */
-    box-shadow: 0 8px 32px rgba(0, 116, 240, 0.1); /* Sombra más fuerte al hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 32px rgba(0, 116, 240, 0.1);
 }
 
 .book-cover {
-    max-width: 100%; /* Asegura que la imagen no desborde */
-    height: auto; /* Mantiene la proporción */
-    display: block; /* Elimina espacio extra debajo de la imagen */
-    border-radius: var(--radius); /* */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra para la portada */
-    transition: transform var(--transition); /* */
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform var(--transition);
 }
 
 .book-info-area {
-    padding: 1.5rem; /* Relleno consistente con tus tarjetas */
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem; /* Espacio entre los párrafos de información */
+    gap: 0.8rem;
 }
 
 .book-info-area p {
     font-size: 1rem;
     margin: 0;
     line-height: 1.6;
-    color: #444; /* */
+    color: #444;
 }
 
 .book-info-area p strong {
-    color: var(--color-text); /* Negrita con color de texto principal */
+    color: var(--color-text);
     font-weight: 600;
 }
 
 .book-description {
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px dashed var(--color-gray-dark); /* Separador para la descripción */
+    border-top: 1px dashed var(--color-gray-dark);
 }
 
 .book-description h3 {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--color-accent); /* Título de descripción con color acento */
+    color: var(--color-accent);
     margin-top: 0;
     margin-bottom: 0.8rem;
 }
 
 .book-description p {
-    font-size: 0.95rem; /* Descripción un poco más pequeña */
+    font-size: 0.95rem;
     line-height: 1.7;
     color: #666;
 }
@@ -115,23 +109,21 @@
 .book-price {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 2px solid var(--color-gray-dark); /* Separador fuerte para el precio */
+    border-top: 2px solid var(--color-gray-dark);
     font-size: 1.3rem;
     font-weight: bold;
-    text-align: right; /* Precio a la derecha */
+    text-align: right;
 }
 
 .book-price .price-value {
-    color: var(--color-cat-eye-orange); /* Color naranja para el valor del precio */
+    color: var(--color-cat-eye-orange);
     font-size: 1.3em;
     margin-left: 0.5rem;
 }
 
-
-/* Contenedor de botones de acción */
 .book-actions {
     display: flex;
-    justify-content: center; /* Centrar los botones */
-    gap: 1.5rem; /* Espacio entre los botones */
-    margin-top: 40px; /* Espacio sobre los botones */
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 40px;
 }
